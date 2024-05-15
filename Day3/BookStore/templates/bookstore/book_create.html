@@ -1,0 +1,85 @@
+{% extends 'main/base_layout.html' %}
+
+{% block title %}
+Book List
+{% endblock %}
+
+{% block main-content %}
+<h4 class="offset-sm-1 mt-2">Add Book</h4>
+<div class="container mt-3 text-center">
+  <div class="row">
+    <div class="col-8">
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group row">
+          <label for="title" class="col-sm-2 col-form-label">Title:</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control {% if form.title.errors %} is-invalid {% endif %}"
+              id="title"
+              name="title"
+              required
+            />
+            {% if form.title.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.title.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="author" class="col-sm-2 col-form-label">Author:</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control {% if form.author.errors %} is-invalid {% endif %}"
+              id="author"
+              name="author"
+              required
+            />
+            {% if form.author.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.author.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="categories" class="col-sm-2 col-form-label"
+            >Categories:</label
+          >
+          <div class="col-sm-10">
+            <select
+              class="form-control {% if form.categories.errors %} is-invalid {% endif %}"
+              id="categories"
+              name="categories"
+              multiple
+              required
+            >
+              {% for category in categories %}
+              <option
+                value="{{ category.id }}"
+                {%if category in form.categories.value%}selected{%endif%}
+              >
+                {{ category.name }}
+              </option>
+              {% endfor %}
+            </select>
+            {% if form.categories.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.categories.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10 offset-sm-2">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

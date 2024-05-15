@@ -1,0 +1,36 @@
+{% extends 'main/base_layout.html' %}
+
+{% block title %}
+Book List
+{% endblock %}
+
+{% block main-content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h4>Book List</h4>
+
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Categories</th>
+            <th>User</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ book.isbn_number }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.categories.all|join:', ' }}</td>
+            <td>{{ book.user.username }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

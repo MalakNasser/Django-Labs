@@ -1,0 +1,57 @@
+{% extends 'main/base_layout.html' %} {% block title %} Book List {% endblock %}
+{% block main-content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h4>Book List</h4>
+
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Categories</th>
+            <th>User</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for book in books %}
+          <tr>
+            <td>{{ book.isbn_number }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.categories.all|join:', ' }}</td>
+            <td>{{ book.user.username }}</td>
+            <td>
+              <a
+                class="btn btn-info"
+                href="{% url 'bookstore:book-details' book.isbn_number %}"
+                >View</a
+              >
+              <a
+                class="btn btn-success"
+                href="{% url 'bookstore:book-update' book.isbn_number %}"
+                >Update</a
+              >
+              {% if perms.BookStore.delete_book %}
+              <a
+                class="btn btn-danger"
+                href="{% url 'bookstore:book-delete' book.isbn_number %}"
+                >Delete</a
+              >
+              {%endif%}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center">No books available</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
